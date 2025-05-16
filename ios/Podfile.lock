@@ -1409,6 +1409,7 @@ PODS:
     - Yoga
   - react-native-vector-icons-evil-icons (12.0.0)
   - react-native-vector-icons-fontawesome6 (12.0.0)
+  - react-native-vector-icons-ionicons (12.0.0)
   - React-NativeModulesApple (0.79.2):
     - glog
     - hermes-engine
@@ -1829,6 +1830,7 @@ DEPENDENCIES:
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - "react-native-vector-icons-evil-icons (from `../node_modules/@react-native-vector-icons/evil-icons`)"
   - "react-native-vector-icons-fontawesome6 (from `../node_modules/@react-native-vector-icons/fontawesome6`)"
+  - "react-native-vector-icons-ionicons (from `../node_modules/@react-native-vector-icons/ionicons`)"
   - React-NativeModulesApple (from `../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios`)
   - React-oscompat (from `../node_modules/react-native/ReactCommon/oscompat`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
@@ -1951,6 +1953,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-vector-icons/evil-icons"
   react-native-vector-icons-fontawesome6:
     :path: "../node_modules/@react-native-vector-icons/fontawesome6"
+  react-native-vector-icons-ionicons:
+    :path: "../node_modules/@react-native-vector-icons/ionicons"
   React-NativeModulesApple:
     :path: "../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios"
   React-oscompat:
@@ -2060,6 +2064,7 @@ SPEC CHECKSUMS:
   react-native-safe-area-context: 00d03dc688ba86664be66f9e3f203fc7d747d899
   react-native-vector-icons-evil-icons: 6c5b7eefc20197657d80997f1f2d41ee3dd6c4fd
   react-native-vector-icons-fontawesome6: b5647e0499000d08551a8d037d9883ed6b5eb604
+  react-native-vector-icons-ionicons: 8b6dafd994b32061eb47e8746c96a7b5a6619bdb
   React-NativeModulesApple: 452b86b29fae99ed0a4015dca3ad9cd222f88abf
   React-oscompat: ef5df1c734f19b8003e149317d041b8ce1f7d29c
   React-perflogger: 6fd2f6811533e9c19a61e855c3033eecbf4ad2a0

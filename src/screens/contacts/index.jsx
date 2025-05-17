@@ -3,6 +3,7 @@ import defaultScreenStyle from '../../styles/defaultScreenStyle';
 import {useEffect, useState} from 'react';
 import SQLite from 'react-native-sqlite-storage';
 import Icon from '@react-native-vector-icons/ionicons';
+import ContactItem from '../../components/contacts/contactItem';
 
 SQLite.enablePromise(false);
 
@@ -13,6 +14,8 @@ const db = SQLite.openDatabase({
 
 const Contacts = () => {
   const [users, setUsers] = useState([]);
+  
+  //tablo columbları değişirse 
   const dropTable = () => {
   db.transaction(txn => {
     txn.executeSql(
@@ -85,7 +88,7 @@ const Contacts = () => {
   };
 
   useEffect(() => {
-    dropTable()
+    //dropTable()
     createContactsTable();
     getContacts();
   }, []);
@@ -94,10 +97,10 @@ const Contacts = () => {
     <View style={defaultScreenStyle.container}>
       <FlatList
         data={users}
-        renderItem={({item}) => <Text>{item.name}</Text>}
+        renderItem={({item}) => <ContactItem item={item}/>}
       />
       <TouchableOpacity
-      onPress={()=>addNewContact("özer","baykal","5084888","baykal@gmail.com","istanbul","yazılım")}
+      onPress={()=>addNewContact("demir","baykal","5084888d","baykal@gmail.com","istanbul","mobile developer")}
         style={{
           position: 'absolute',
           right: 20,

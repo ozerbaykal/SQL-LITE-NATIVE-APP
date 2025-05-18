@@ -1,23 +1,29 @@
 import {StyleSheet, View} from 'react-native';
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import { TABNAVIGATOR } from '../utils/routes';
+import {CONTACTDETAIL, TABNAVIGATOR} from '../utils/routes';
 import TabNavigator from './tabNavigator';
+import ContactDetail from '../screens/contacts/contactDetail';
+import Colors from '../theme/colors';
 
 const RootNavigator = () => {
   const Stack = createNativeStackNavigator();
   return (
-   
-      <Stack.Navigator
-      screenOptions={
-        {
-          headerShown:false
-        }
-      }
-      >
-        <Stack.Screen name={TABNAVIGATOR} component={TabNavigator} />
-      </Stack.Navigator>
-
+    <Stack.Navigator 
+    screenOptions={{
+      headerBackTitle:"Geri",
+      headerTintColor:Colors.BLACK
+    }}
+    >
+      <Stack.Screen
+        options={{
+          headerShown: false,
+        }}
+        name={TABNAVIGATOR}
+        component={TabNavigator}
+      />
+      <Stack.Screen name={CONTACTDETAIL} component={ContactDetail} />
+    </Stack.Navigator>
   );
 };
 

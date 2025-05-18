@@ -1,15 +1,19 @@
 import {Pressable, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import { convertFullName } from '../../utils/functions';
-import { Colors } from '../../theme/colors';
+import  Colors  from '../../theme/colors';
 import Avatar from './avatar';
+import { useNavigation } from '@react-navigation/native';
+import { CONTACTDETAIL } from '../../utils/routes';
+import { sizes } from '../../utils/constants';
 
 const ContactItem = ({item}) => {
+    const navigation = useNavigation()
   return (
-    <Pressable style={styles.container}>
+    <Pressable style={styles.container} onPress={()=>navigation.navigate(CONTACTDETAIL,{contact:item})}>
       <View style={styles.avatarContainer}>
-        <Avatar item={item}/>
-      </View>
+        <Avatar item={item} size={sizes.SMALL}/>
+      </View> 
 
       <View style={styles.infoContainer}>
         <Text style={styles.name}>

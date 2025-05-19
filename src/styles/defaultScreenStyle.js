@@ -1,10 +1,12 @@
 import { StyleSheet } from "react-native";
-import { Colors } from "../theme/colors";
+import  Colors  from "../theme/colors";
 
 const defaultScreenStyle = StyleSheet.create({
     container:{
         flex:1,
-        backgroundColor:Colors.WHİTE
+        backgroundColor:Colors.WHITE,
+        padding:5
+        
 
     }
 

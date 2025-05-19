@@ -4,7 +4,9 @@ const Colors = {
   GREEN:"#37d67a",
   GRAY:"#909090",
   INPUT:"#f8f9fc",
-  BLUE:"#0077B6"
+  BLUE:"#0077B6",
+  SOFTGRAY:"#D9EAFD",
+  PURPLE:"#695AEC",
 };
 
 export default Colors;

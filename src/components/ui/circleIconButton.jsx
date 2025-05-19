@@ -18,8 +18,8 @@ const styles = StyleSheet.create({
     container:{
         justifyContent:"center",
         alignItems:"center",
-        width:width*0.15,
-        height:width*0.15,
+        width:width*0.17,
+        height:width*0.17,
         borderRadius:100
     }
 })

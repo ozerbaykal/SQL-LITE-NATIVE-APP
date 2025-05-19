@@ -47,11 +47,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     margin: 5,
     borderRadius: 100,
-    backgroundColor:Colors.GRAY
+    backgroundColor:Colors.SOFTGRAY
     
   },
   name: {
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: '600',
     color: Colors.BLACK,
   },

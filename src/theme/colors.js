@@ -7,6 +7,7 @@ const Colors = {
   BLUE:"#0077B6",
   SOFTGRAY:"#D9EAFD",
   PURPLE:"#695AEC",
+  RED:"#F7374F"
 };
 
 export default Colors;

@@ -1,4 +1,5 @@
 import {Pressable, ScrollView, StyleSheet, Text, View} from 'react-native';
+import SQLite from 'react-native-sqlite-storage';
 import defaultScreenStyle from '../../styles/defaultScreenStyle';
 import Avatar from '../../components/contacts/avatar';
 import {convertFullName} from '../../utils/functions';
@@ -14,6 +15,33 @@ const ContactDetail = ({route,navigation}) => {
 
   const {contact} = route.params;
 
+  const db = SQLite.openDatabase({
+  name: 'ContactsDataBase',
+  location: 'default',
+});
+
+
+  const addNewCall = (date,resent_id ) => {
+    db.transaction(txn => {
+      txn.executeSql(
+        'INSERT INTO resents (date,resent_id) VALUES(?,?)',
+        [date,resent_id],
+        (sqlTxn, res) => {
+          console.log('arama eklendi');
+  
+        },
+        error => {
+          console.log('Hata:', error.message);
+        },
+      );
+    });
+  };
+const handleCall =()=>{
+  const now =new Date().toDateString()
+  addNewCall(now,contact.id);
+  navigation.navigate(CALLING,{contact:contact})
+
+}
   return (
     <View style={defaultScreenStyle.container}>
       <ScrollView>
@@ -35,7 +63,7 @@ const ContactDetail = ({route,navigation}) => {
             icon={<Icon name="chatbubble" size={30} color={Colors.WHITE}  />}
           />
           <CircleIconButton
-            onPress={()=>navigation.navigate(CALLING,{contact:contact})}
+            onPress={handleCall}
             color={Colors.BLUE}
             icon={<Icon name="call" size={30} color={Colors.WHITE}  />}
           />

@@ -4,6 +4,7 @@ import {useEffect, useState} from 'react';
 import SQLite from 'react-native-sqlite-storage';
 import Icon from '@react-native-vector-icons/ionicons';
 import ContactItem from '../../components/contacts/contactItem';
+import { getResents } from '../resents/getResentHelper';
 
 SQLite.enablePromise(false);
 
@@ -14,22 +15,22 @@ const db = SQLite.openDatabase({
 
 const Contacts = () => {
   const [users, setUsers] = useState([]);
-  
-  //tablo columbları değişirse 
+
+  //tablo columbları değişirse
   const dropTable = () => {
-  db.transaction(txn => {
-    txn.executeSql(
-      'DROP TABLE IF EXISTS users',
-      [],
-      () => {
-        console.log('users tablosu silindi');
-      },
-      error => {
-        console.log('Drop Hatası:', error.message);
-      },
-    );
-  });
-};
+    db.transaction(txn => {
+      txn.executeSql(
+        'DROP TABLE IF EXISTS users',
+        [],
+        () => {
+          console.log('users tablosu silindi');
+        },
+        error => {
+          console.log('Drop Hatası:', error.message);
+        },
+      );
+    });
+  };
   const createContactsTable = () => {
     db.transaction(txn => {
       txn.executeSql(
@@ -37,6 +38,20 @@ const Contacts = () => {
         [],
         (sqlTxn, res) => {
           console.log('Tablo oluşturuldu');
+        },
+        error => {
+          console.log('Hata:', error.message);
+        },
+      );
+    });
+  };
+  const createResentsTable = () => {
+    db.transaction(txn => {
+      txn.executeSql(
+        'CREATE TABLE IF NOT EXISTS resents (id INTEGER PRIMARY KEY AUTOINCREMENT,date VARCHAR(100),resent_id INTEGER)',
+        [],
+        (sqlTxn, res) => {
+          console.log('Resent oluşturuldu');
         },
         error => {
           console.log('Hata:', error.message);
@@ -52,17 +67,15 @@ const Contacts = () => {
         [],
         (sqlTxn, res) => {
           if (res.rows.length > 0) {
-            const temp =[]
+            const temp = [];
             for (let i = 0; i < res.rows.length; i++) {
               let item = res.rows.item(i);
-              temp.push(item)
+              temp.push(item);
             }
-              setUsers(temp);
-
-          }else{
-            setUsers([])
+            setUsers(temp);
+          } else {
+            setUsers([]);
           }
-          console.log(' gelen veriler', res.rows);
         },
         error => {
           console.log('Hata:', error.message);
@@ -78,7 +91,7 @@ const Contacts = () => {
         [name, surname, phone, email, adress, job],
         (sqlTxn, res) => {
           console.log('kişi eklendi');
-          getContacts()
+          getContacts();
         },
         error => {
           console.log('Hata:', error.message);
@@ -90,17 +103,28 @@ const Contacts = () => {
   useEffect(() => {
     //dropTable()
     createContactsTable();
+    createResentsTable()
     getContacts();
+  
   }, []);
 
   return (
     <View style={defaultScreenStyle.container}>
       <FlatList
         data={users}
-        renderItem={({item}) => <ContactItem item={item}/>}
+        renderItem={({item}) => <ContactItem item={item} />}
       />
       <TouchableOpacity
-      onPress={()=>addNewContact("demir","baykal","5084888d","baykal@gmail.com","istanbul","mobile developer")}
+        onPress={() =>
+          addNewContact(
+            'demir',
+            'baykal',
+            '5084888d',
+            'baykal@gmail.com',
+            'istanbul',
+            'mobile developer',
+          )
+        }
         style={{
           position: 'absolute',
           right: 20,

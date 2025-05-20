@@ -17,20 +17,20 @@ const Contacts = () => {
   const [users, setUsers] = useState([]);
 
   //tablo columbları değişirse
-  const dropTable = () => {
-    db.transaction(txn => {
-      txn.executeSql(
-        'DROP TABLE IF EXISTS users',
-        [],
-        () => {
-          console.log('users tablosu silindi');
-        },
-        error => {
-          console.log('Drop Hatası:', error.message);
-        },
-      );
-    });
-  };
+  // const dropTable = () => {
+  //   db.transaction(txn => {
+  //     txn.executeSql(
+  //       'DROP TABLE IF EXISTS resents',
+  //       [],
+  //       () => {
+  //         console.log('users tablosu silindi');
+  //       },
+  //       error => {
+  //         console.log('Drop Hatası:', error.message);
+  //       },
+  //     );
+  //   });
+  // };
   const createContactsTable = () => {
     db.transaction(txn => {
       txn.executeSql(
@@ -48,10 +48,10 @@ const Contacts = () => {
   const createResentsTable = () => {
     db.transaction(txn => {
       txn.executeSql(
-        'CREATE TABLE IF NOT EXISTS resents (id INTEGER PRIMARY KEY AUTOINCREMENT,date VARCHAR(100),resent_id INTEGER)',
+        'CREATE TABLE IF NOT EXISTS calls(id INTEGER PRIMARY KEY AUTOINCREMENT,date VARCHAR(100),resent_id INTEGER,callType VARCHAR(20))',
         [],
         (sqlTxn, res) => {
-          console.log('Resent oluşturuldu');
+          console.log('Calls tablosu oluşturuldu');
         },
         error => {
           console.log('Hata:', error.message);

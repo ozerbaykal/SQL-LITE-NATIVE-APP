@@ -21,11 +21,11 @@ const ContactDetail = ({route,navigation}) => {
 });
 
 
-  const addNewCall = (date,resent_id ) => {
+  const addNewCall = (date,resent_id,callType ) => {
     db.transaction(txn => {
       txn.executeSql(
-        'INSERT INTO resents (date,resent_id) VALUES(?,?)',
-        [date,resent_id],
+        'INSERT INTO calls (date,resent_id,callType) VALUES(?,?,?)',
+        [date,resent_id,callType],
         (sqlTxn, res) => {
           console.log('arama eklendi');
   
@@ -38,7 +38,7 @@ const ContactDetail = ({route,navigation}) => {
   };
 const handleCall =()=>{
   const now =new Date().toDateString()
-  addNewCall(now,contact.id);
+  addNewCall(now,contact.id,"outcoming");
   navigation.navigate(CALLING,{contact:contact})
 
 }

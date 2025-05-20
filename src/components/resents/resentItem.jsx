@@ -5,21 +5,22 @@ import {convertFullName} from '../../utils/functions';
 import Colors from '../../theme/colors';
 import Avatar from '../contacts/avatar';
 import {sizes} from '../../utils/constants';
-import Icon from '@react-native-vector-icons/ionicons'
+import Icon from '@react-native-vector-icons/ionicons';
 
 const ResentItem = ({item}) => {
+  const [user, setUser] = useState();
+
   const db = SQLite.openDatabase({
     name: 'ContactsDataBase',
     location: 'default',
   });
 
-  const [user, setUser] = useState({});
   const getUser = () => {
     db.transaction(txn => {
       txn.executeSql(
         `SELECT * FROM users WHERE id = ${item.resent_id}`,
         [],
-        (sqlTxn, res) => {
+  (sqlTxn, res) => {
           if (res.rows.length > 0) {
             for (let i = 0; i < res.rows.length; i++) {
               let item = res.rows.item(i);
@@ -38,19 +39,21 @@ const ResentItem = ({item}) => {
       );
     });
   };
+
   useEffect(() => {
     getUser();
+    console.log(user)
   }, []);
 
   return (
     <Pressable style={styles.container}>
       <View style={styles.avatarContainer}>
-        <Avatar item={user} size={sizes.SMALL} />
+        {user && <Avatar item={user} size={sizes.SMALL} />}
       </View>
 
       <View style={styles.infoContainer}>
         <Text style={styles.name}>
-          {convertFullName(user.name, user.surname)}
+          {user ? convertFullName(user?.name, user?.surname) : null}
         </Text>
         <Text style={styles.job}>{item.date}</Text>
       </View>
@@ -90,14 +93,14 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     flex: 4,
-    marginHorizontal:10
+    marginHorizontal: 10,
   },
   avatarContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  callTypeContainer:{
-    marginHorizontal:10
-  }
+  callTypeContainer: {
+    marginHorizontal: 10,
+  },
 });

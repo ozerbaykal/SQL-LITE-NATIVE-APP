@@ -15,7 +15,7 @@ const Resents = () => {
   const getResents = () => {
     db.transaction(txn => {
       txn.executeSql(
-        'SELECT * FROM resents',
+        'SELECT * FROM calls',
         [],
         (sqlTxn, res) => {
           if (res.rows.length > 0) {

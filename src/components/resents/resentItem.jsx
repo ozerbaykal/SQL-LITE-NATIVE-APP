@@ -24,13 +24,10 @@ const ResentItem = ({item}) => {
           if (res.rows.length > 0) {
             for (let i = 0; i < res.rows.length; i++) {
               let item = res.rows.item(i);
-              if (user) {
-                setUser(item);
-                console.log(user);
-              } else {
-                setUser({});
-              }
+            setUser(item)
             }
+          }else{
+            setUser(undefined)
           }
         },
         error => {
@@ -42,13 +39,13 @@ const ResentItem = ({item}) => {
 
   useEffect(() => {
     getUser();
-    console.log(user)
   }, []);
 
   return (
     <Pressable style={styles.container}>
       <View style={styles.avatarContainer}>
         {user && <Avatar item={user} size={sizes.SMALL} />}
+        
       </View>
 
       <View style={styles.infoContainer}>

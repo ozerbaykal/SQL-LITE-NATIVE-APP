@@ -1,10 +1,19 @@
-import {View, Text, FlatList, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 import defaultScreenStyle from '../../styles/defaultScreenStyle';
 import {useEffect, useState} from 'react';
 import SQLite from 'react-native-sqlite-storage';
 import Icon from '@react-native-vector-icons/ionicons';
 import ContactItem from '../../components/contacts/contactItem';
-import { getResents } from '../resents/getResentHelper';
+import {getResents} from '../resents/getResentHelper';
+import {useDispatch, useSelector} from 'react-redux';
+import {setContacts, setPending} from '../../store/slice/contactSlice';
+import Colors from '../../theme/colors';
 
 SQLite.enablePromise(false);
 
@@ -14,7 +23,8 @@ const db = SQLite.openDatabase({
 });
 
 const Contacts = () => {
-  const [users, setUsers] = useState([]);
+  const {contacts, pending} = useSelector(state => state.contacts);
+  const dispatch = useDispatch();
 
   //tablo columbları değişirse
   // const dropTable = () => {
@@ -61,6 +71,7 @@ const Contacts = () => {
   };
 
   const getContacts = () => {
+    dispatch(setPending(true))
     db.transaction(txn => {
       txn.executeSql(
         'SELECT * FROM users',
@@ -72,13 +83,12 @@ const Contacts = () => {
               let item = res.rows.item(i);
               temp.push(item);
             }
-            setUsers(temp);
-          } else {
-            setUsers([]);
-          }
+            dispatch(setContacts(temp));
+          } 
         },
         error => {
-          console.log('Hata:', error.message);
+          console.log('Hata:', error.message)
+          dispatch(setPending(false))
         },
       );
     });
@@ -103,17 +113,22 @@ const Contacts = () => {
   useEffect(() => {
     //dropTable()
     createContactsTable();
-    createResentsTable()
+    createResentsTable();
     getContacts();
-  
   }, []);
 
   return (
     <View style={defaultScreenStyle.container}>
-      <FlatList
-        data={users}
-        renderItem={({item}) => <ContactItem item={item} />}
-      />
+      {pending ? (
+        <ActivityIndicator color={Colors.GRAY} />
+      ) : (
+        <FlatList
+          ListEmptyComponent={<Text>Henüz bit kayıt yok </Text>}
+          data={contacts}
+          renderItem={({item}) => <ContactItem item={item} />}
+        />
+      )}
+
       <TouchableOpacity
         onPress={() =>
           addNewContact(

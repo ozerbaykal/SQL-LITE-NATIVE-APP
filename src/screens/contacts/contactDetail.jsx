@@ -9,10 +9,15 @@ import CircleIconButton from '../../components/ui/circleIconButton';
 import Icon from '@react-native-vector-icons/ionicons';
 import { CALLING } from '../../utils/routes';
 import { useEffect } from 'react';
+import { useIsFocused } from '@react-navigation/native';
+import { setContacts, setPending } from '../../store/slice/contactSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 const ContactDetail = ({route,navigation}) => {
   // const route = useRoute()
   //      const {contact} = route.params
+  const {contacts, pending} = useSelector(state => state.contacts);
+
 
   const {contact} = route.params;
 
@@ -20,6 +25,9 @@ const ContactDetail = ({route,navigation}) => {
   name: 'ContactsDataBase',
   location: 'default',
 });
+const isFocused = useIsFocused();
+ const dispatch = useDispatch();
+
 
 
   const addNewCall = (date,resent_id,callType ) => {
@@ -37,13 +45,45 @@ const ContactDetail = ({route,navigation}) => {
       );
     });
   };
+     const getContacts = () => {
+        dispatch(setPending(true))
+        db.transaction(txn => {
+          txn.executeSql(
+            'SELECT * FROM users',
+            [],
+            (sqlTxn, res) => {
+              if (res.rows.length > 0) {
+                const temp = [];
+                for (let i = 0; i < res.rows.length; i++) {
+                  let item = res.rows.item(i);
+                  temp.push(item);
+                }
+                dispatch(setContacts(temp));
+              } 
+              dispatch(setPending(false))
+  
+            },
+            error => {
+              console.log('Hata:', error.message)
+              dispatch(setPending(false))
+            },
+          );
+        });
+      };
+    
   
 const handleCall =()=>{
   const now =new Date().toDateString()
   addNewCall(now,contact.id,"outcoming");
   navigation.navigate(CALLING,{contact:contact})
 
-}
+} 
+  useEffect(() => {
+    if (isFocused) {
+     
+   getContacts()
+    }
+  }, [isFocused]);
 
   
     return (

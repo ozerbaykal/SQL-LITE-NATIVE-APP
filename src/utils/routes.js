@@ -4,4 +4,5 @@ export const RESENTS = 'Aramalar';
 export const CONTACTDETAIL = 'CONTACTDETAIL';
 export const CALLING = 'CALLING';
 export const ADDNEWCONTACT ="ADDNEWCONTACT";
+export const UPDATECONTACT ="UPDATECONTACT";
 export const TABNAVIGATOR = 'TABNAVIGATOR';

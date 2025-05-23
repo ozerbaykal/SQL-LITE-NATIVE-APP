@@ -11,17 +11,20 @@ import { useNavigation } from '@react-navigation/native';
 import { CONTACTS } from '../../utils/routes';
 
 
-const AddContact = () => {
+const UpdateContact = ({route}) => {
   const db = SQLite.openDatabase({
     name: 'ContactsDataBase',
     location: 'default',
   });
+  const {contact} = route.params
+  console.log(contact)
   
  const dispatch=  useDispatch()
-   const addNewContact = (values) => {
+
+   const UpdateContact = (values) => {
     db.transaction(txn => {
       txn.executeSql(
-        'INSERT INTO users (name,surname,phone,email,adress,job) VALUES(?,?,?,?,?,?)',
+        `UPDATE users SET  name=?,surname=?,phone=?,email=?,adress=?,job=? WHERE id=${contact.id}`,
         [values.name, values.surname, values.phone, values.email, values.adress, values.job],
         (sqlTxn, res) => {
           console.log('kişi eklendi');
@@ -66,15 +69,15 @@ const AddContact = () => {
       <ScrollView>
         <Formik
           initialValues={{
-            name: '',
-            surname: '',
-            email: '',
-            phone: '',
-            adress: '',
-            job: '',
+            name: contact.name,
+            surname:contact.surname,
+            email: contact.email,
+            phone: String(contact.phone),
+            adress: contact.adress,
+            job: contact.job,
           }}
           validationSchema={newContactSchema}
-          onSubmit={values => addNewContact(values)}>
+          onSubmit={values => UpdateContact(values)}>
           {({handleChange, handleBlur, handleSubmit, values, errors}) => (
             <View>
               <Input
@@ -152,9 +155,9 @@ const AddContact = () => {
               <Button style={styles.button} onPress={()=>{
                 handleSubmit();
                 navigation.goBack()
-                Alert.alert("Kiş Eklendi")
+                Alert.alert("Kiş Güncellendi")
               }}>
-                Save
+             Güncelle
               </Button>
             </View>
           )}
@@ -164,7 +167,7 @@ const AddContact = () => {
   );
 };
 
-export default AddContact;
+export default UpdateContact;
 
 const styles = StyleSheet.create({
   input: {

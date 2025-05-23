@@ -8,6 +8,7 @@ import Colors from '../../theme/colors';
 import CircleIconButton from '../../components/ui/circleIconButton';
 import Icon from '@react-native-vector-icons/ionicons';
 import { CALLING } from '../../utils/routes';
+import { useEffect } from 'react';
 
 const ContactDetail = ({route,navigation}) => {
   // const route = useRoute()
@@ -36,13 +37,16 @@ const ContactDetail = ({route,navigation}) => {
       );
     });
   };
+  
 const handleCall =()=>{
   const now =new Date().toDateString()
   addNewCall(now,contact.id,"outcoming");
   navigation.navigate(CALLING,{contact:contact})
 
 }
-  return (
+
+  
+    return (
     <View style={defaultScreenStyle.container}>
       <ScrollView>
         <View style={styles.userContainer}>

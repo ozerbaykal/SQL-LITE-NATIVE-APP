@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { deleteContact } from "../actions/contactActions";
 
 const initialState={
     contacts:[],
@@ -17,6 +18,17 @@ const contactSlice = createSlice({
             state.pending=action.payload
         },
     },
+    extraReducers:(builder)=>{
+        builder.addCase( deleteContact.pending,(state,action)=>{
+
+        }).addCase(deleteContact.fulfilled,(state,action)=>{
+
+        }).addCase(deleteContact.rejected,(state,action)=>{
+            
+        })
+    }
+
+    
 
 
 
